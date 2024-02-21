@@ -1,23 +1,51 @@
-import React from 'react'
-import type { MenuProps } from 'antd'
-import { Layout as AntdLayout, Menu } from 'antd'
+import { Layout as AntdLayout, Input, Avatar, Badge, Button } from 'antd'
+import { MenuUnfoldOutlined } from '@ant-design/icons'
+import type { SearchProps } from 'antd/es/input/Search'
+import { UserOutlined, BellOutlined, GlobalOutlined } from '@ant-design/icons'
+
 const { Header: AntdHeader } = AntdLayout
-const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}))
+const { Search } = Input
+
+const onSearch: SearchProps['onSearch'] = (value, _e, info) =>
+  console.log(info?.source, value)
 
 function Header() {
   return (
-    <AntdHeader style={{ display: 'flex', alignItems: 'center' }}>
-      <div className="demo-logo" />
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        defaultSelectedKeys={['2']}
-        items={items1}
-        style={{ flex: 1, minWidth: 0 }}
-      />
+    <AntdHeader
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        color: 'white',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <MenuUnfoldOutlined style={{ color: '#fff' }} />
+
+        <div style={{ display: 'flex' }}>
+          <Search
+            placeholder="input search text"
+            onSearch={onSearch}
+            style={{ width: 304 }}
+          />
+        </div>
+      </div>
+      <div style={{ gap: 8, color: '#fff' }}>
+        <Button type="text" style={{ color: '#fff' }}>
+          <GlobalOutlined style={{ width: 16, height: 16 }} />
+          English
+        </Button>
+        <a href="#">
+          <Badge count={21}>
+            <BellOutlined style={{ width: 16, height: 16, color: '#fff' }} />
+            {/* <Avatar shape="square" size="large" /> */}
+          </Badge>
+        </a>
+        <Avatar
+          icon={<UserOutlined />}
+          style={{ paddingRight: 12, paddingLeft: 12 }}
+        />
+      </div>
     </AntdHeader>
   )
 }

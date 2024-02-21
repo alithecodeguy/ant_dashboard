@@ -1,84 +1,47 @@
-import React, { useState } from 'react'
-import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-} from '@ant-design/icons'
+import React from 'react'
+import { Menu as AntdMenu } from 'antd'
 import type { MenuProps } from 'antd'
-import { Layout as AntdLayout, Button, Menu as AntdMenu } from 'antd'
-// const { Menu: AntdMenu } = AntdLayout
+import {
+  LaptopOutlined,
+  NotificationOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 
-type MenuItem = Required<MenuProps>['items'][number]
+const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
+  key,
+  label: `nav ${key}`,
+}))
 
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: 'group'
-): MenuItem {
+const items2: MenuProps['items'] = [
+  UserOutlined,
+  LaptopOutlined,
+  NotificationOutlined,
+].map((icon, index) => {
+  const key = String(index + 1)
+
   return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  } as MenuItem
-}
+    key: `sub${key}`,
+    icon: React.createElement(icon),
+    label: `subnav ${key}`,
 
-const items: MenuItem[] = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('Option 3', '3', <ContainerOutlined />),
-
-  getItem('Navigation One', 'sub1', <MailOutlined />, [
-    getItem('Option 5', '5'),
-    getItem('Option 6', '6'),
-    getItem('Option 7', '7'),
-    getItem('Option 8', '8'),
-  ]),
-
-  getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
-    getItem('Option 9', '9'),
-    getItem('Option 10', '10'),
-
-    getItem('Submenu', 'sub3', null, [
-      getItem('Option 11', '11'),
-      getItem('Option 12', '12'),
-    ]),
-  ]),
-]
-
-const Menu: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false)
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed)
+    children: new Array(4).fill(null).map((_, j) => {
+      const subKey = index * 4 + j + 1
+      return {
+        key: subKey,
+        label: `option${subKey}`,
+      }
+    }),
   }
+})
 
+export default function Menu() {
   return (
-    <div style={{ width: 256 }}>
-      <Button
-        type="primary"
-        onClick={toggleCollapsed}
-        style={{ marginBottom: 16 }}
-      >
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button>
-      <AntdMenu
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode="inline"
-        theme="dark"
-        inlineCollapsed={collapsed}
-        items={items}
-      />
-    </div>
+    <AntdMenu
+      mode="inline"
+      defaultSelectedKeys={['1']}
+      defaultOpenKeys={['sub1']}
+      style={{ height: '100%', borderRight: 0 }}
+      items={items2}
+    />
   )
 }
-
-export default Menu

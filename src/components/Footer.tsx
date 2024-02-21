@@ -3,7 +3,7 @@ const { Footer: AntdFooter } = AntdLayout
 
 function Footer() {
   return (
-    <AntdFooter style={{ textAlign: 'center' }}>
+    <AntdFooter style={{ textAlign: 'center', background: 'red' }}>
       Ant Design ©{new Date().getFullYear()} Created by Ant UED
     </AntdFooter>
   )
